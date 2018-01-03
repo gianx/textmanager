@@ -214,6 +214,7 @@ At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praese
         // Render optionsdiv
         $("#optionsdiv").append(
                 $('<input>', {type: 'button', class:"button", value: "Extract email", id: "cl_extractemail"}),
+                $('<span>', {id: "msgout"})
             );
 
         // define on click
@@ -221,9 +222,9 @@ At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praese
             old_text = $("#thetext").val();
             new_text = "";
             if (extractEmails(old_text)!=null) {
-                $("#optionsdiv").append("<br>", extractEmails(old_text).join('<br>'));
+                $("#msgout").append("<br>", extractEmails(old_text).join('<br>'));
             } else {
-                $("#optionsdiv").html("<h3>No email found.</h3>");
+                $("#msgout").html("<h3>No email found.</h3>");
             }
             
         });
@@ -243,6 +244,7 @@ At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praese
         // Render optionsdiv
         $("#optionsdiv").append(
                 $('<input>', {type: 'button', class:"button", value: "Extract URI", id: "cl_extracturi"}),
+                $('<span>', {id: "msgout"})
             );
 
         // define on click
@@ -250,9 +252,9 @@ At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praese
             old_text = $("#thetext").val();
             new_text = "";
             if (extractURI(old_text)!=null) {
-                $("#optionsdiv").append("<br>", extractURI(old_text).join('<br>'));
+                $("#msgout").append("<br>", extractURI(old_text).join('<br>'));
             } else {
-                $("#optionsdiv").html("<h3>No URI found.</h3>");
+                $("#msgout").html("<h3>No URI found.</h3>");
             }
             
         });
@@ -277,16 +279,27 @@ At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praese
                 $('<input>', {type: 'checkbox', id:"casesensitive"}),
                 "<br>",
                 $('<input>', {type: 'button', class:"button", value: "Search and replace", id: "cl_searchandreplace"}),
+                $('<span>', {id: "msgout"})
             );
 
         // define on click
         $("#cl_searchandreplace").on("click", function(){
-            old_text = $("#thetext").val().split(/\n/);
+            old_text = $("#thetext").val();
             search = $("#texttosearch").val();
             replace = $("#texttoreplace").val();
-            casesensitive = $("#casesensitive").prop("checked")
-            new_text = "";
-            $("#optionsdiv").append("<h3>Done</h3>");
+            if ($("#casesensitive").prop("checked")) {
+                cs = 'g';
+            } else {
+                cs = 'gi';
+            }
+            new_text = old_text.replace(new RegExp(search,cs), replace);
+            count = old_text.match(new RegExp(search,cs), replace);
+            if (count!=null) {
+                $("#msgout").html("Found "+ count.length + " occurrencies");
+            } else {
+                $("#msgout").html("Found 0 occurrencies");
+            }
+            $("#thetext").val(new_text);
         });
         
     }
