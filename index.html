@@ -165,6 +165,42 @@ At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praese
         
     }
 
+
+    function split_lines(){
+
+        // Clear optionsdiv
+        $("#optionsdiv").empty();
+
+        // Render optionsdiv
+        $("#optionsdiv").append(
+                $('<label>', {text: 'Separator', class:"fieldlabel"}),
+                $('<input>', {type: 'text', val: "", id:"separator"}),
+                "<br>",
+                $('<label>', {text: 'Include separator in splitted lines', class:"fieldlabel"}),
+                $('<input>', {type: 'checkbox', id:"includeseparator"}),
+                "<br>",
+                $('<input>', {type: 'button', class:"button", value: "Split lines", id: "cl_splitlines"}),
+                $('<span>', {id: "msgout"})
+            );
+
+        // define on click
+        $("#cl_splitlines").on("click", function(){
+            old_text = $("#thetext").val();
+            separator = $("#separator").val();
+            replace = $("#texttoreplace").val();
+            includeseparator = $("#casesensitive").prop("checked");
+            console.log(separator)
+            if (includeseparator) {
+                sep = separator;
+            } else {
+                sep = "";
+            }
+            new_text = old_text.split(separator).map(x => x+String(sep)).join("");
+            $("#thetext").val(new_text);
+        });
+        
+    }
+
     function row_prepostpend(){
 
         // Clear optionsdiv
@@ -333,7 +369,8 @@ At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praese
             text_level_functions: { trim_all_text:text_trim, 
                                     uppercase_all_text:text_upper, 
                                     lowercase_all_text:text_lower, 
-                                    remove_blank_lines:text_remove_blank_lines 
+                                    remove_blank_lines:text_remove_blank_lines,
+                                    split_lines: split_lines
                                     },
             single_row_level_functions:  { prepend_and_postpend:row_prepostpend, 
                                     trim:row_trim, 
