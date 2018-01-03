@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Site template</title>
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+    <meta name="description" content="">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+   <!-- Inline stylesheets -->
+    <style>
+
+    .fieldlabel {color:blue; padding: 10px;}
+    .button {color: red; padding: 10px; margin:10px;}
+    </style>
+  </head>
+  
+
+  <body>
+    <div id=container>
+        <div id=textdiv>
+            <textarea id="thetext" rows=20 cols=80>
+             Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+
+At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.
+   
+
+
+            </textarea>
+        </div>
+        <div id=menudiv>
+            <select id=select1>
+                <option></option>
+            </select>
+            <select id=select2>
+                <option></option>
+            </select>
+        </div>
+
+        <div id=optionsdiv>
+
+        </div>
+    </div>
+    <!-- jQuery  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
+    <!-- Modernizr -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    <!-- Scripts -->
+    <script>
+
+    function foo() { alert("Function not yet implemented")}
+
+    function text_trim(){
+
+        // Clear optionsdiv
+        $("#optionsdiv").empty();
+
+        // Render optionsdiv
+        $("#optionsdiv").append(
+                $('<input>', {type: 'button', class:"button", value: "Trim all the text", id: "cl_texttrim"}),
+        );
+
+        // define on click
+        $("#cl_texttrim").on("click", function(){
+            old_text = $("#thetext").val();
+            new_text = old_text.trim();
+            $("#thetext").val(new_text);
+        });
+        
+    }
+
+    function text_upper(){
+
+        // Clear optionsdiv
+        $("#optionsdiv").empty();
+
+        // Render optionsdiv
+        $("#optionsdiv").append(
+                $('<input>', {type: 'button', class:"button", value: "Uppercase", id: "cl_uppercase"}),
+        );
+
+        // define on click
+        $("#cl_uppercase").on("click", function(){
+            old_text = $("#thetext").val();
+            new_text = old_text.toUpperCase();
+            $("#thetext").val(new_text);
+        });
+        
+    }
+
+    function text_lower(){
+
+        // Clear optionsdiv
+        $("#optionsdiv").empty();
+
+        // Render optionsdiv
+        $("#optionsdiv").append(
+                $('<input>', {type: 'button', class:"button", value: "Lowercase", id: "cl_lowercase"}),
+        );
+
+        // define on click
+        $("#cl_lowercase").on("click", function(){
+            old_text = $("#thetext").val();
+            new_text = old_text.toLowerCase();
+            $("#thetext").val(new_text);
+        });
+        
+    }
+
+    function row_trim(){
+
+        // Clear optionsdiv
+        $("#optionsdiv").empty();
+
+        // Render optionsdiv
+        $("#optionsdiv").append(
+                $('<input>', {type: 'button', class:"button", value: "Trim single lines", id: "cl_trimline"}),
+        );
+
+        // define on click
+        $("#cl_trimline").on("click", function(){
+            old_text = $("#thetext").val().split(/\n/);
+            new_text = ""
+            for (var line in old_text){
+                new_text = new_text + old_text[line].trim() + "\n";    
+            }
+            $("#thetext").val(new_text);
+        });
+        
+    }
+
+    function text_remove_blank_lines(){
+
+        // Clear optionsdiv
+        $("#optionsdiv").empty();
+
+        // Render optionsdiv
+        $("#optionsdiv").append(
+                $('<input>', {type: 'button', class:"button", value: "Remove blank lines", id: "cl_removeblanklines"}),
+            );
+
+        // define on click
+        $("#cl_removeblanklines").on("click", function(){
+            old_text = $("#thetext").val().split(/\n/);
+            new_text = "";
+            for (var line in old_text){
+                if (old_text[line]!="") {
+                    new_text += old_text[line] + "\n";
+                }
+            }
+            $("#thetext").val(new_text);
+        });
+        
+    }
+
+    function row_prepostpend(){
+
+        // Clear optionsdiv
+        $("#optionsdiv").empty();
+
+        // Render optionsdiv
+        $("#optionsdiv").append(
+                $('<label>', {text: 'Text to prepend', class:"fieldlabel"}),
+                $('<input>', {type: 'text', val: "", id:"texttoprepend"}),
+                "<br>",
+                $('<label>', {text: 'Text to postpend', class:"fieldlabel"}),
+                $('<input>', {type: 'text', val: "", id:"texttopostpend"}),
+                "<br>",
+                $('<label>', {text: 'Skip blank lines', class:"fieldlabel"}),
+                $('<input>', {type: 'checkbox', id:"skipblanklines"}),
+                "<br>",
+                $('<input>', {type: 'button', class:"button", value: "Pre/post-pend!", id: "cl_prepostpend"}),
+            );
+
+        // define on click
+        $("#cl_prepostpend").on("click", function(){
+            old_text = $("#thetext").val().split(/\n/);
+            new_text = "";
+            for (var line in old_text){
+                if ((old_text[line]=="") && ($("#skipblanklines").prop("checked")==true)) {
+                    new_text = new_text + "\n";
+                } else {
+                    new_text = new_text + $("#texttoprepend").val() + old_text[line] + $("#texttopostpend").val() + "\n";
+                }
+                
+            }
+            $("#thetext").val(new_text);
+        });
+        
+    }
+
+    // Populate SELECT2 on change SELECT1
+
+    $( "#select1" ).change(function() {
+        $("#select2").find("option").remove().end()
+        $("#select2").append($('<option>', { value : ""}).text(""));
+        sel = $("#select1 option:selected").text().replace(/\ /g,"_");
+        for (var key in menu[sel]) {
+            $("#select2").append($('<option>', { value : key}).text(key));
+        }
+    });
+
+    // Execute function based on change SELECT 2
+
+    $( "#select2" ).change(function() {
+        sel1 = $("#select1 option:selected").text().replace(/\ /g,"_")
+        sel2 = $("#select2 option:selected").text().replace(/\ /g,"_");
+        menu[sel1][sel2]();
+        
+        
+    });
+
+    // MAIN
+
+    $( document ).ready(function() {
+        menu = {
+            text_level_functions: { trim_all_text:text_trim, 
+                                    uppercase_all_text:text_upper, 
+                                    lowercase_all_text:text_lower, 
+                                    remove_blank_lines:text_remove_blank_lines 
+                                    },
+            row_level_functions:  { prepend_and_postpend:row_prepostpend, 
+                                    trim:row_trim, 
+                                    pippo:foo
+                                    }
+        }
+
+        // Populate SELECT1
+        for (var key in menu) {
+            $("#select1").append($('<option>', { value : key}).text(key.replace(/\_/g," ")));
+        }
+    });
+    </script>
+  </body>
+
+</html>
