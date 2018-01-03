@@ -26,9 +26,11 @@
             <textarea id="thetext" rows=20 cols=80>
              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut ftp://download.com enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
 
-At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.
+gianluca@gianlucanieri.com
+
+At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti gianluca.nieri@gmail.com quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo http://gmail.com minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. https://www.gianlucanieri.com Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.
    
 
 
@@ -199,6 +201,97 @@ At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praese
         
     }
 
+    function extract_email(){
+
+        function extractEmails (text)
+        {
+            return text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
+        }
+
+        // Clear optionsdiv
+        $("#optionsdiv").empty();
+
+        // Render optionsdiv
+        $("#optionsdiv").append(
+                $('<input>', {type: 'button', class:"button", value: "Extract email", id: "cl_extractemail"}),
+            );
+
+        // define on click
+        $("#cl_extractemail").on("click", function(){
+            old_text = $("#thetext").val();
+            new_text = "";
+            if (extractEmails(old_text)!=null) {
+                $("#optionsdiv").append("<br>", extractEmails(old_text).join('<br>'));
+            } else {
+                $("#optionsdiv").html("<h3>No email found.</h3>");
+            }
+            
+        });
+        
+    }
+
+    function extract_uri(){
+
+        function extractURI (text)
+        {
+            return text.match(/\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/ig);
+        }
+
+        // Clear optionsdiv
+        $("#optionsdiv").empty();
+
+        // Render optionsdiv
+        $("#optionsdiv").append(
+                $('<input>', {type: 'button', class:"button", value: "Extract URI", id: "cl_extracturi"}),
+            );
+
+        // define on click
+        $("#cl_extracturi").on("click", function(){
+            old_text = $("#thetext").val();
+            new_text = "";
+            if (extractURI(old_text)!=null) {
+                $("#optionsdiv").append("<br>", extractURI(old_text).join('<br>'));
+            } else {
+                $("#optionsdiv").html("<h3>No URI found.</h3>");
+            }
+            
+        });
+        
+    }
+
+
+    function search_and_replace(){
+
+        // Clear optionsdiv
+        $("#optionsdiv").empty();
+
+        // Render optionsdiv
+        $("#optionsdiv").append(
+                $('<label>', {text: 'Text to search', class:"fieldlabel"}),
+                $('<input>', {type: 'text', val: "", id:"texttosearch"}),
+                "<br>",
+                $('<label>', {text: 'Text to replace', class:"fieldlabel"}),
+                $('<input>', {type: 'text', val: "", id:"texttoreplace"}),
+                "<br>",
+                $('<label>', {text: 'Case sensitive?', class:"fieldlabel"}),
+                $('<input>', {type: 'checkbox', id:"casesensitive"}),
+                "<br>",
+                $('<input>', {type: 'button', class:"button", value: "Search and replace", id: "cl_searchandreplace"}),
+            );
+
+        // define on click
+        $("#cl_searchandreplace").on("click", function(){
+            old_text = $("#thetext").val().split(/\n/);
+            search = $("#texttosearch").val();
+            replace = $("#texttoreplace").val();
+            casesensitive = $("#casesensitive").prop("checked")
+            new_text = "";
+            $("#optionsdiv").append("<h3>Done</h3>");
+        });
+        
+    }
+
+
     // Populate SELECT2 on change SELECT1
 
     $( "#select1" ).change(function() {
@@ -229,10 +322,17 @@ At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praese
                                     lowercase_all_text:text_lower, 
                                     remove_blank_lines:text_remove_blank_lines 
                                     },
-            row_level_functions:  { prepend_and_postpend:row_prepostpend, 
+            single_row_level_functions:  { prepend_and_postpend:row_prepostpend, 
                                     trim:row_trim, 
                                     pippo:foo
-                                    }
+                                    },
+            extract_content:    {
+                                    extract_email: extract_email,
+                                    extract_uri: extract_uri
+                                },
+            search_and_replace: {
+                                    search_and_replace: search_and_replace
+            }
         }
 
         // Populate SELECT1
