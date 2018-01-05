@@ -57,6 +57,26 @@ At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praese
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
     <!-- Scripts -->
     <script>
+    // ------------------------------------
+  	// Prototypes
+  	// ------------------------------------
+  	if (!String.prototype.ltrim) {
+	  (function() {
+	    String.prototype.ltrim = function() {
+	      return this.replace(/^\s+/, '');
+	    };
+	  })();
+	}
+	if (!String.prototype.rtrim) {
+	  (function() {
+	    String.prototype.rtrim = function() {
+	      return this.replace(/\s+$/, '');
+	    };
+	  })();
+	}
+
+
+
 
     function foo() { 
         $("#optionsdiv").html("<h3>Funzionalità non ancora implementata.</h3>");
@@ -126,15 +146,22 @@ At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praese
 
         // Render optionsdiv
         $("#optionsdiv").append(
-                $('<input>', {type: 'button', class:"button", value: "Trim single lines", id: "cl_trimline"}),
+                $('<input>', {type: 'button', class:"button", value: "Left trim", id: "cl_trimline"}),
+                $('<input>', {type: 'button', class:"button", value: "Right trim", id: "cl_trimline"}),
         );
 
         // define on click
-        $("#cl_trimline").on("click", function(){
+        $("input").on("click", function(){
             old_text = $("#thetext").val().split(/\n/);
-            new_text = ""
+            new_text = "";
+            action = $(this).val();
             for (var line in old_text){
-                new_text = new_text + old_text[line].trim() + "\n";    
+            	if (action=='Left trim') {
+            		new_text = new_text + old_text[line].ltrim() + "\n";
+            	} 
+            	if (action=='Right trim') {
+            		new_text = new_text + old_text[line].rtrim() + "\n";
+            	}  
             }
             $("#thetext").val(new_text);
         });
@@ -250,7 +277,7 @@ At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praese
         // Render optionsdiv
         $("#optionsdiv").append(
                 $('<input>', {type: 'button', class:"button", value: "Extract email", id: "cl_extractemail"}),
-                $('<span>', {id: "msgout"})
+                $('<p>', {id: "msgout"})
             );
 
         // define on click
@@ -258,7 +285,7 @@ At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praese
             old_text = $("#thetext").val();
             new_text = "";
             if (extractEmails(old_text)!=null) {
-                $("#msgout").append("<br>", extractEmails(old_text).join('<br>'));
+                $("#msgout").html(extractEmails(old_text).join('<br>'));
             } else {
                 $("#msgout").html("<h3>No email found.</h3>");
             }
@@ -280,7 +307,7 @@ At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praese
         // Render optionsdiv
         $("#optionsdiv").append(
                 $('<input>', {type: 'button', class:"button", value: "Extract URI", id: "cl_extracturi"}),
-                $('<span>', {id: "msgout"})
+                $('<p>', {id: "msgout"})
             );
 
         // define on click
@@ -288,11 +315,38 @@ At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praese
             old_text = $("#thetext").val();
             new_text = "";
             if (extractURI(old_text)!=null) {
-                $("#msgout").append("<br>", extractURI(old_text).join('<br>'));
+                $("#msgout").html(extractURI(old_text).join('<br>'));
             } else {
                 $("#msgout").html("<h3>No URI found.</h3>");
             }
             
+        });
+        
+    }
+
+    function encode_and_decode(){
+
+        // Clear optionsdiv
+        $("#optionsdiv").empty();
+
+        // Render optionsdiv
+        $("#optionsdiv").append(
+                $('<input>', {type: 'button', class:"button", value: "URI Encode"}),
+                $('<input>', {type: 'button', class:"button", value: "URI Decode"}),
+                $('<span>', {id: "msgout"})
+            );
+
+        // define on click
+        $("input").on("click", function(){
+            old_text = $("#thetext").val();
+            new_text = "";
+            action = $(this).val()
+            if (action=='URI Encode') {
+            	$("#thetext").val(encodeURI(old_text));
+            }
+            if (action=='URI Decode') {
+            	$("#thetext").val(decodeURI(old_text));
+            }                                  
         });
         
     }
@@ -370,7 +424,8 @@ At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praese
                                     uppercase_all_text:text_upper, 
                                     lowercase_all_text:text_lower, 
                                     remove_blank_lines:text_remove_blank_lines,
-                                    split_lines: split_lines
+                                    split_lines: split_lines,
+                                    encode_and_decode: encode_and_decode
                                     },
             single_row_level_functions:  { prepend_and_postpend:row_prepostpend, 
                                     trim:row_trim, 
